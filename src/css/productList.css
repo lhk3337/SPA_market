@@ -1,0 +1,81 @@
+.ProductList {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+.ProductList ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.ProductList button {
+  position: absolute;
+  outline: none;
+  border: none;
+  right: -100px;
+  background-color: transparent;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+.list {
+  width: 380px;
+  height: 462px;
+  margin-bottom: 60px;
+}
+.list:nth-child(3n + 2) {
+  margin: 0px 24px;
+}
+.listTop {
+  position: relative;
+}
+.listTop img {
+  width: 380px;
+  cursor: pointer;
+  height: 380px;
+  border: 1px solid #bdbdbd;
+  border-radius: 10px;
+}
+.listTop .soldout {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  width: 300px;
+  height: 40px;
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  align-items: center;
+  cursor: default;
+}
+.soldout p {
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}
+.list .content {
+  padding-top: 20px;
+  height: 62px;
+}
+.title h2 {
+  font-size: 18px;
+}
+
+.content .prices {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+.content .price__content {
+  display: flex;
+  align-items: center;
+}
+.content .prices .price {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30.05px;
+  margin-right: 2px;
+}
