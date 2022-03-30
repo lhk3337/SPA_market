@@ -1,1 +1,14 @@
 @import "reset.css";
+@import "productList.css";
+@font-face {
+  font-family: "SpoqaHanSansNeo-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+#root {
+  font-family: "SpoqaHanSansNeo-Regular";
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 160px;
+}
