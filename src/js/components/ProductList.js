@@ -8,19 +8,23 @@ export default function ProductList({ $target }) {
     this.render();
   };
   const fetchProducts = async () => {
-    const response = await api.fetchProductsList();
-    this.setState([...response.data]);
+    const response = await api.fetchProductsList(); // api 데이터를 response에 저장
+    this.setState([...response.data]); // setState의 매개변수 nextState로 들어가서 this.state에 저장한다.
   };
   fetchProducts();
   this.render = () => {
+    // 화면이 표시 되는 부분
     $target.appendChild($page);
+    // <div id="root"></div>아래에 className이 ProductList라는 div를 생성
     if (!this.state) {
+      // api의 데이터가 없다면 출력하지 않고 return한다.
       return;
     }
     console.log(this.state);
+    // 클래스가 ProductList인 div 아래 innerHTML을 통해 태그를 생성한다.
     $page.innerHTML = `
     <ul>
-      ${this.state
+      ${this.state // API 데이터(배열 객체 구조)[{},{}], 맵을 통해 요소를 html태그에 적용하고 있다.
         .map(
           (product) => `
             <li class="list">
