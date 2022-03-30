@@ -26,10 +26,13 @@ export default function ProductList({ $target }) {
             <li class="list">
               <div class="listTop">
                 <img src="http://test.api.weniv.co.kr/${product.thumbnailImg}" />
+                ${product.stockCount === 0 ? `<div class="soldout"><p>SOLDOUT</p></div>` : ``}
               </div>
               <div class="content">
                 <div class="title">
-                  <h2>${product.productName}</h2>
+                  <h2>${
+                    product.productName.length < 30 ? product.productName : product.productName.substring(0, 25) + "..."
+                  }</h2>
                 </div>
                 <div class="prices">
                   <div class="price__content">
