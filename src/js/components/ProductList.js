@@ -40,7 +40,7 @@ export default function ProductList({ $target }) {
                 </div>
                 <div class="prices">
                   <div class="price__content">
-                    <span class="price">${product.price}</span>
+                    <span class="price">${product.price.toLocaleString("ko-KR")}</span>
                     <div>원</div>
                   </div>
                 </div>
