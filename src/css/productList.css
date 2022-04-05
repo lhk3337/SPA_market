@@ -79,3 +79,15 @@
   line-height: 30.05px;
   margin-right: 2px;
 }
+.price__content .original__price {
+  color: #828282;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0px 10px;
+  text-decoration: line-through;
+}
+.price__content .discountRate {
+  color: #6327fe;
+  font-weight: 700;
+  font-size: 16px;
+}

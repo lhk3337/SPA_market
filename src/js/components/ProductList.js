@@ -25,9 +25,11 @@ export default function ProductList({ $target }) {
     $page.innerHTML = `
     <ul>
       ${this.state // API 데이터(배열 객체 구조)[{},{}], 맵을 통해 요소를 html태그에 적용하고 있다.
-        .map(
-          (product) => `
-            <li class="list">
+        .map((product) => {
+          const discounted = Math.round(product.price * (product.discountRate / 100)); // 할인가 계산
+          const discountValue = Math.floor((product.price - discounted).toPrecision(2)).toLocaleString("ko-KR"); // 현재가 - 할인가
+          return `
+            <li class="list" data-product-id="${product.id}">
               <div class="listTop">
                 <img src="http://test.api.weniv.co.kr/${product.thumbnailImg}" />
                 ${product.stockCount === 0 ? `<div class="soldout"><p>SOLDOUT</p></div>` : ``}
@@ -39,19 +41,28 @@ export default function ProductList({ $target }) {
                   }</h2>
                 </div>
                 <div class="prices">
-                  <div class="price__content">
-                    <span class="price">${product.price.toLocaleString("ko-KR")}</span> 
-                    <div>원</div>
-                  </div>
+                ${
+                  product.discountRate > 0 // 할인율이 있으면 할인가 적용 아니면 현재가
+                    ? // 할인율 계산
+                      `<div class="price__content">
+                        <span class="price">${discountValue}</span><div>원</div>
+                        <span class="original__price">${product.price.toLocaleString("ko-KR")}원</span>
+                        <span class="discountRate">${product.discountRate}%</span>
+                      </div>`
+                    : `<div class="price__content">
+                        <span class="price">${product.price.toLocaleString("ko-KR")}</span> 
+                        <div>원</div>
+                      </div>`
+                }
                 </div>
               </div>
             </li>
-      `
-        )
+      `;
+        })
         .join("")}
     </ul>
     <a href="/cart"><button><img src="/src/assets/cart-btn.svg"></button></a>
-  `;
+    `;
   };
 }
 // ${product.stockCount === 0 ? `<div class="soldout"><p>SOLDOUT</p></div>` : ``} stockCount가 0이면 soldout 표시
