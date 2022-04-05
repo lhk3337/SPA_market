@@ -40,7 +40,7 @@ export default function ProductList({ $target }) {
                 </div>
                 <div class="prices">
                   <div class="price__content">
-                    <span class="price">${product.price.toLocaleString("ko-KR")}</span>
+                    <span class="price">${product.price.toLocaleString("ko-KR")}</span> 
                     <div>원</div>
                   </div>
                 </div>
@@ -54,3 +54,6 @@ export default function ProductList({ $target }) {
   `;
   };
 }
+// ${product.stockCount === 0 ? `<div class="soldout"><p>SOLDOUT</p></div>` : ``} stockCount가 0이면 soldout 표시
+// product.productName.length < 30 ? product.productName : product.productName.substring(0, 25) + "..." 문자열이 길면 substring을 이용하여 문자열을 생략 후 말줄임표 삽입
+// product.price.toLocaleString("ko-KR") 이부분은 천단위 콤마 설정
