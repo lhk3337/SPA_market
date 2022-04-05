@@ -1,5 +1,5 @@
 import CartPage from "./components/CartPage.js";
-import ProductList from "./components/ProductList.js";
+import ProductList from "./components/ProductList/ProductList.js";
 
 function App({ $target }) {
   this.route = () => {

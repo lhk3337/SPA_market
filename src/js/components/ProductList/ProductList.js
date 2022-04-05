@@ -1,4 +1,4 @@
-import { api } from "../api.js";
+import { api } from "../../api.js";
 export default function ProductList({ $target }) {
   const $page = document.createElement("div");
   $page.className = "ProductList";
@@ -64,6 +64,14 @@ export default function ProductList({ $target }) {
     <a href="/cart"><button><img src="/src/assets/cart-btn.svg"></button></a>
     `;
   };
+  // 각 리스트의 클릭 이벤트
+  $page.addEventListener("click", (e) => {
+    const $li = e.target.closest("li");
+    const { productId } = $li.dataset;
+    if (productId) {
+      console.log(productId);
+    }
+  });
 }
 // ${product.stockCount === 0 ? `<div class="soldout"><p>SOLDOUT</p></div>` : ``} stockCount가 0이면 soldout 표시
 // product.productName.length < 30 ? product.productName : product.productName.substring(0, 25) + "..." 문자열이 길면 substring을 이용하여 문자열을 생략 후 말줄임표 삽입
