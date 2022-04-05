@@ -1,4 +1,4 @@
-const API_URL = "http://test.api.weniv.co.kr";
+const API_URL = "https://test.api.weniv.co.kr";
 // API 데이터 비동기 설정 함수
 const request = async (url) => {
   try {
