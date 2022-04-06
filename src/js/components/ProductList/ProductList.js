@@ -21,7 +21,6 @@ export default function ProductList({ $target }) {
       // api의 데이터가 없다면 출력하지 않고 return한다.
       return;
     }
-    console.log(this.state);
     // 클래스가 ProductList인 div 아래 innerHTML을 통해 태그를 생성한다.
     $page.innerHTML = `
     <ul>
@@ -32,7 +31,7 @@ export default function ProductList({ $target }) {
           return `
             <li class="list" data-product-id="${product.id}">
               <div class="listTop">
-                <img src="http://test.api.weniv.co.kr/${product.thumbnailImg}" />
+                <img class="product__thumbnail" src="http://test.api.weniv.co.kr/${product.thumbnailImg}" />
                 ${product.stockCount === 0 ? `<div class="soldout"><p>SOLDOUT</p></div>` : ``}
               </div>
               <div class="content">
@@ -69,11 +68,13 @@ export default function ProductList({ $target }) {
   $page.addEventListener("click", (e) => {
     const $li = e.target.closest("li");
     const { productId } = $li.dataset;
-    if (productId) {
-      new ProductModal({
-        $target,
-        productId,
-      }).render();
+    if (e.target.className === "product__thumbnail") {
+      if (productId) {
+        new ProductModal({
+          $target,
+          productId,
+        }).render();
+      }
     }
   });
 }
