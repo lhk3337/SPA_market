@@ -26,6 +26,7 @@ export default function ProductList({ $target }) {
     <ul>
       ${this.state // API 데이터(배열 객체 구조)[{},{}], 맵을 통해 요소를 html태그에 적용하고 있다.
         .map((product) => {
+          let liked = localStorage.getItem(product.id);
           const discounted = Math.round(product.price * (product.discountRate / 100)); // 할인가 계산
           const discountValue = Math.floor((product.price - discounted).toPrecision(2)).toLocaleString("ko-KR"); // 현재가 - 할인가
           return `
@@ -39,6 +40,13 @@ export default function ProductList({ $target }) {
                   <h2>${
                     product.productName.length < 30 ? product.productName : product.productName.substring(0, 25) + "..."
                   }</h2>
+                  <div class="like__item">
+                  ${
+                    liked === null
+                      ? `<button><img class="like__off" src="/src/assets/icon-heart.svg"></button>`
+                      : `<button><img class="like__on" src="/src/assets/icon-heart-on.svg"></button>`
+                  }
+                  </div>
                 </div>
                 <div class="prices">
                 ${
@@ -61,7 +69,7 @@ export default function ProductList({ $target }) {
         })
         .join("")}
     </ul>
-    <a href="/cart"><button><img src="/src/assets/cart-btn.svg"></button></a>
+    <a href="/cart"><button class="cart__btn"><img src="/src/assets/cart-btn.svg"></button></a>
     `;
   };
   // 각 리스트의 클릭 이벤트
@@ -75,6 +83,12 @@ export default function ProductList({ $target }) {
           productId,
         }).render();
       }
+    } else if (e.target.className === "like__on") {
+      localStorage.removeItem(productId, "true");
+      this.render();
+    } else if (e.target.className === "like__off") {
+      localStorage.setItem(productId, "true");
+      this.render();
     }
   });
 }
