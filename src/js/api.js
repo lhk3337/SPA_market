@@ -24,6 +24,9 @@ export const api = {
       data: itemData,
     };
   },
+  fetchProduct: async (Id) => {
+    return await request(`${API_URL}/mall/${Id}`);
+  },
 };
 
 export default api;

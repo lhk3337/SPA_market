@@ -1,4 +1,5 @@
 import { api } from "../../api.js";
+import ProductModal from "./ProductModal.js";
 export default function ProductList({ $target }) {
   const $page = document.createElement("div");
   $page.className = "ProductList";
@@ -69,7 +70,10 @@ export default function ProductList({ $target }) {
     const $li = e.target.closest("li");
     const { productId } = $li.dataset;
     if (productId) {
-      console.log(productId);
+      new ProductModal({
+        $target,
+        productId,
+      }).render();
     }
   });
 }

@@ -95,6 +95,8 @@ video {
 body,
 html {
   box-sizing: border-box;
+  overflow: auto;
+  height: 100%;
 }
 
 /* HTML5 display-role reset for older browsers */
