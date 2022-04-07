@@ -1,6 +1,6 @@
 import { api } from "../../api.js";
 
-export default function ProductModal({ $target, productId }) {
+export default function ProductModal({ $target, productId, listRender }) {
   this.state = {
     product: null,
   };
@@ -47,6 +47,16 @@ export default function ProductModal({ $target, productId }) {
                   shippingFee === 0 ? "무료배송" : `${shippingFee.toLocaleString("ko-KR")}원`
                 }
                 </p>
+                <div class="count__box">
+                  <input type="number">
+                </div>
+                <div class="like__detail__item">
+                ${
+                  getLiked === null
+                    ? `<img class="like__detail__off" src="/src/assets/icon-heart.svg">`
+                    : `<img class="like__detail__on" src="/src/assets/icon-heart-on.svg">`
+                }
+                </div>
               </div>
             <div>
         </div>
@@ -54,6 +64,17 @@ export default function ProductModal({ $target, productId }) {
     const $closeBtn = document.querySelector(".closeBtn");
     $closeBtn.addEventListener("click", () => {
       $modal.remove();
+      listRender();
     });
   };
+
+  $modal.addEventListener("click", (e) => {
+    if (e.target.className === "like__detail__on") {
+      localStorage.removeItem(productId, "true");
+      this.render();
+    } else if (e.target.className === "like__detail__off") {
+      localStorage.setItem(productId, "true");
+      this.render();
+    }
+  });
 }

@@ -81,6 +81,7 @@ export default function ProductList({ $target }) {
         new ProductModal({
           $target,
           productId,
+          listRender: () => this.render(),
         }).render();
       }
     } else if (e.target.className === "like__on") {
