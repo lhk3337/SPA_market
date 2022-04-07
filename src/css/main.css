@@ -7,6 +7,13 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "SpoqaHanSansNeo-Medium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Medium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 #root {
   font-family: "SpoqaHanSansNeo-Regular";
   max-width: 1200px;
