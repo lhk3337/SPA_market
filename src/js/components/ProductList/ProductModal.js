@@ -3,12 +3,12 @@ import { api } from "../../api.js";
 export default function ProductModal({ $target, productId, listRender }) {
   this.state = {
     product: null,
+    count: 1,
   };
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
   };
-
   this.fetchProduct = async () => {
     const product = await api.fetchProduct(productId);
     this.setState({
@@ -27,8 +27,8 @@ export default function ProductModal({ $target, productId, listRender }) {
     }
     const {
       product: { id, productName, price, stockCount, shippingFee, detailInfoImage, viewCount, thumbnailImg },
+      count,
     } = this.state;
-
     $target.appendChild($modal);
     let getLiked = localStorage.getItem(productId);
     $modal.innerHTML = `
@@ -48,7 +48,15 @@ export default function ProductModal({ $target, productId, listRender }) {
                 }
                 </p>
                 <div class="count__box">
-                  <input type="number">
+                  <div class="count__countainer">
+                    <button id="minus__btn">
+                      <img class="minus" src="/src/assets/icon-minus-line.svg" />
+                    </button>
+                    <input type="number" class="input__count" min="1" max="${stockCount}" value="${count}" />
+                    <button id="plus__btn">
+                      <img class="plus" src="/src/assets/icon-plus-line.svg" />
+                    </button>
+                  </div>
                 </div>
                 <div class="like__detail__item">
                 ${
@@ -62,9 +70,49 @@ export default function ProductModal({ $target, productId, listRender }) {
         </div>
     `;
     const $closeBtn = document.querySelector(".closeBtn");
+    const count__input = document.querySelector(".input__count");
+    const minus__btn = document.getElementById("minus__btn");
+    const plus__btn = document.getElementById("plus__btn");
+
     $closeBtn.addEventListener("click", () => {
       $modal.remove();
       listRender();
+    });
+
+    count__input.addEventListener("change", (e) => {
+      if (e.target.value <= 0) {
+        this.setState({ ...this.state, count: parseInt(1) });
+      } else if (e.target.value > stockCount) {
+        this.setState({ ...this.state, count: parseInt(stockCount) });
+      } else {
+        this.setState({ ...this.state, count: parseInt(e.target.value) });
+      }
+    });
+
+    minus__btn.addEventListener("click", () => {
+      if (!this.state.count) {
+        this.setState({ ...this.state, count: parseInt(count__input.min) });
+      } else {
+        if (parseInt(count__input.value) === 1) {
+          this.setState({ ...this.state, count: parseInt(count__input.min) });
+        } else {
+          this.setState({ ...this.state, count: parseInt(this.state.count) - 1 });
+          count__input.value = this.state.count;
+        }
+      }
+    });
+
+    plus__btn.addEventListener("click", () => {
+      if (!this.state.count) {
+        this.setState({ ...this.state, count: parseInt(count__input.min) });
+      } else {
+        if (parseInt(count__input.max) <= parseInt(count__input.value)) {
+          this.setState({ ...this.state, count: parseInt(count__input.max) });
+        } else {
+          this.setState({ ...this.state, count: parseInt(this.state.count) + 1 });
+          count__input.value = this.state.count;
+        }
+      }
     });
   };
 

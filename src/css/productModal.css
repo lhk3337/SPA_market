@@ -82,7 +82,7 @@
 }
 .right__container .like__detail__item {
   outline: none;
-  width: 1.5vw;
+  width: 25px;
   background-color: transparent;
   border: 1px solid #bdbdbd;
   border-radius: 5px;
@@ -96,4 +96,47 @@
   cursor: pointer;
   width: 30px;
   height: 30px;
+}
+
+.right__container .count__countainer {
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  width: 122px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  /*   align-items:center; */
+}
+
+.count__countainer input {
+  width: 100%;
+  border: none;
+  border-left: 1px solid #bdbdbd;
+  border-right: 1px solid #bdbdbd;
+  font-size: 16px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+}
+.count__countainer button {
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
