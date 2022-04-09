@@ -25,6 +25,7 @@ export default function ProductModal({ $target, productId, listRender }) {
     if (this.state.product === null) {
       return;
     }
+    console.log(this.state);
     const {
       product: { id, productName, price, stockCount, shippingFee, detailInfoImage, viewCount, thumbnailImg },
       count,
@@ -90,28 +91,20 @@ export default function ProductModal({ $target, productId, listRender }) {
     });
 
     minus__btn.addEventListener("click", () => {
-      if (!this.state.count) {
+      if (parseInt(count__input.value) === 1) {
         this.setState({ ...this.state, count: parseInt(count__input.min) });
       } else {
-        if (parseInt(count__input.value) === 1) {
-          this.setState({ ...this.state, count: parseInt(count__input.min) });
-        } else {
-          this.setState({ ...this.state, count: parseInt(this.state.count) - 1 });
-          count__input.value = this.state.count;
-        }
+        this.setState({ ...this.state, count: parseInt(this.state.count) - 1 });
+        count__input.value = this.state.count;
       }
     });
 
     plus__btn.addEventListener("click", () => {
-      if (!this.state.count) {
-        this.setState({ ...this.state, count: parseInt(count__input.min) });
+      if (parseInt(count__input.max) <= parseInt(count__input.value)) {
+        this.setState({ ...this.state, count: parseInt(count__input.max) });
       } else {
-        if (parseInt(count__input.max) <= parseInt(count__input.value)) {
-          this.setState({ ...this.state, count: parseInt(count__input.max) });
-        } else {
-          this.setState({ ...this.state, count: parseInt(this.state.count) + 1 });
-          count__input.value = this.state.count;
-        }
+        this.setState({ ...this.state, count: parseInt(this.state.count) + 1 });
+        count__input.value = this.state.count;
       }
     });
   };
