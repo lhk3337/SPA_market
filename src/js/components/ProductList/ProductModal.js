@@ -59,6 +59,16 @@ export default function ProductModal({ $target, productId, listRender }) {
                     </button>
                   </div>
                 </div>
+                <div class="total__price__container">
+                  <h3>총 상품 금액</h3>
+                  <div class="total__price">
+                    <span class="price__text">총 수량 <span class="count">${count}</span>개</span>
+                    <div class="border"></div>
+                    <h2 class="total__price__title">${(count * price).toLocaleString(
+                      "ko-KR"
+                    )}<span class="total__price__text">원</span></h2>
+                  </div>
+                </div>
                 <div class="like__detail__item">
                 ${
                   getLiked === null

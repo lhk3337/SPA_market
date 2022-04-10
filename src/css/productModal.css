@@ -80,23 +80,6 @@
   border-top: 2px solid #e0e0e0;
   margin-bottom: 16px;
 }
-.right__container .like__detail__item {
-  outline: none;
-  width: 25px;
-  background-color: transparent;
-  border: 1px solid #bdbdbd;
-  border-radius: 5px;
-  padding: 15px 17px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.right__container .like__detail__item img {
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-}
 
 .right__container .count__countainer {
   border: 1px solid #bdbdbd;
@@ -139,4 +122,68 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+.right__container .total__price__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total__price__container h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #333333;
+}
+
+.total__price__container .total__price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 305px;
+}
+.total__price .price__text {
+  color: #828282;
+  font-size: 18px;
+  line-height: 22.54px;
+  font-weight: 400;
+}
+
+.price__text .count {
+  font-family: "SpoqaHanSansNeo-Medium";
+  color: #eb5757;
+}
+
+.total__price .border {
+  border: 1px solid #c4c4c4;
+
+  padding: 10px 0px;
+}
+
+.total__price .total__price__title {
+  font-family: "SpoqaHanSansNeo-Medium";
+  font-weight: 700;
+  color: #eb5757;
+  font-size: 36px;
+}
+.total__price__title .total__price__text {
+  font-size: 18px;
+}
+
+/* 좋아요 버튼   */
+.right__container .like__detail__item {
+  outline: none;
+  width: 25px;
+  background-color: transparent;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  padding: 15px 17px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right__container .like__detail__item img {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
 }
