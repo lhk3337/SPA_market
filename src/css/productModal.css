@@ -231,3 +231,8 @@ input[type="number"] {
 .product__info {
   margin-top: 40px;
 }
+.product__info .info__title {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}

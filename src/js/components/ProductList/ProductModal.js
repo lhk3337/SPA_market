@@ -93,7 +93,9 @@ export default function ProductModal({ $target, productId, listRender }) {
                 </div>
               </div>
             </div>
-          <div class="product__info">sss</div>
+          <div class="product__info">
+            <h1 class="info__title">상품 정보</h1>
+          </div>
         </div>
     `;
     const $closeBtn = document.querySelector(".closeBtn");
