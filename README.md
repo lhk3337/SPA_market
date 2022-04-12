@@ -2,11 +2,13 @@
 
 ### 메인 페이지
 
-<p align="center">
-<img src="src/assets/main.png"  width="600" >
-</p>
+<img src="src/assets/main.png"  width="400" >
 
 <br />
+
+## 배포
+
+[https://dev-market.netlify.app/](https://dev-market.netlify.app/)
 
 ## 참조
 
