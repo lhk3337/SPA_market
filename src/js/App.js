@@ -1,6 +1,6 @@
 import CartPage from "./components/CartPage.js";
 import ProductList from "./components/ProductList/ProductList.js";
-
+import { init } from "./router.js";
 function App({ $target }) {
   this.route = () => {
     const { pathname } = location; // '/' 문자 뒤의 URL 경로를 값으로 하는 String을 반환
@@ -15,7 +15,9 @@ function App({ $target }) {
       }).render();
     }
   };
+  init(this.route);
   this.route();
+  window.addEventListener("popstate", this.route);
 }
 
 export default App;

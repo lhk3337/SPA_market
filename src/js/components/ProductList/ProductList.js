@@ -1,4 +1,5 @@
 import { api } from "../../api.js";
+import { routeChange } from "../../router.js";
 import ProductModal from "./ProductModal.js";
 export default function ProductList({ $target }) {
   const $page = document.createElement("div");
@@ -69,27 +70,36 @@ export default function ProductList({ $target }) {
         })
         .join("")}
     </ul>
-    <a href="/cart"><button class="cart__btn"><img src="/src/assets/cart-btn.svg"></button></a>
+    <button class="cart__btn"><img src="/src/assets/cart-btn.svg"></button>
     `;
+
+    document.querySelector(".cart__btn").addEventListener("click", () => {
+      routeChange(`/cart`);
+    });
   };
+
   // 각 리스트의 클릭 이벤트
   $page.addEventListener("click", (e) => {
     const $li = e.target.closest("li");
-    const { productId } = $li.dataset;
-    if (e.target.className === "product__thumbnail") {
-      if (productId) {
-        new ProductModal({
-          $target,
-          productId,
-          listRender: () => this.render(),
-        }).render();
+    if ($li === null) {
+      return;
+    } else {
+      const { productId } = $li.dataset;
+      if (e.target.className === "product__thumbnail") {
+        if (productId) {
+          new ProductModal({
+            $target,
+            productId,
+            listRender: () => this.render(),
+          }).render();
+        }
+      } else if (e.target.className === "like__on") {
+        localStorage.removeItem(productId, "true");
+        this.render();
+      } else if (e.target.className === "like__off") {
+        localStorage.setItem(productId, "true");
+        this.render();
       }
-    } else if (e.target.className === "like__on") {
-      localStorage.removeItem(productId, "true");
-      this.render();
-    } else if (e.target.className === "like__off") {
-      localStorage.setItem(productId, "true");
-      this.render();
     }
   });
 }
