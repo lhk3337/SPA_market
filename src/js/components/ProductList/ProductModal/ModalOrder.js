@@ -10,14 +10,36 @@ export default function ModalOrder({ $target, getLiked, data }) {
 
   this.render = () => {
     const {
-      product: { id, productName, price, stockCount, shippingFee, detailInfoImage, viewCount, thumbnailImg },
+      product: {
+        id,
+        productName,
+        price,
+        stockCount,
+        shippingFee,
+        discountPrice,
+        detailInfoImage,
+        discountRate,
+        viewCount,
+        thumbnailImg,
+      },
       count,
     } = this.state;
     $component.innerHTML = `
     <h2>${productName}</h2>
     <div class="price">
-      <span class="price__title">${price.toLocaleString("ko-KR")}</span>
-      <span>원</span>
+    ${
+      discountRate > 0
+        ? `<div class="price__content">
+            <span class="discount__price">${discountPrice.toLocaleString("ko-KR")}</span><div>원</div>
+            <span class="original__price">${price.toLocaleString("ko-KR")}원</span>
+            <span class="discountRate">${discountRate}%</span>
+          </div>
+          `
+        : `
+          <span class="price__title">${price.toLocaleString("ko-KR")}</span>
+          <span>원</span>
+          `
+    }
     </div>
     <div class="${stockCount > 0 ? `` : `not__count__info`}">
       <p class="shipFee">택배배송 / ${shippingFee === 0 ? "무료배송" : `${shippingFee.toLocaleString("ko-KR")}원`}</p>
@@ -40,7 +62,10 @@ export default function ModalOrder({ $target, getLiked, data }) {
           </span>
           <div class="border"></div>
           <h2 class="total__price__title">
-            ${(count * price).toLocaleString("ko-KR")}
+          ${
+            discountRate > 0 ? (discountPrice * count).toLocaleString("ko-KR") : (count * price).toLocaleString("ko-KR")
+          }
+            
             <span class="total__price__text">원</span>
           </h2>
         </div>
@@ -100,5 +125,16 @@ export default function ModalOrder({ $target, getLiked, data }) {
       }
     });
   };
+  const discount = () => {
+    const { price, discountRate } = this.state.product;
+    const discounted = Math.round(price * (discountRate / 100)); // 할인가 계산
+    const discountValue = Math.floor((price - discounted).toPrecision(2)); // 현재가 - 할인가
+    if (discountRate > 0) {
+      this.setState({ ...this.state, product: { ...this.state.product, discountPrice: discountValue } });
+    } else {
+      this.setState({ ...this.state, product: { ...this.state.product, discountPrice: 0 } });
+    }
+  };
+  discount();
   this.render();
 }
