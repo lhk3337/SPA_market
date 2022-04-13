@@ -1,6 +1,6 @@
 import { api } from "../../api.js";
 import { routeChange } from "../../router.js";
-import ProductModal from "./ProductModal.js";
+import ProductModal from "./ProductModal/ProductModal.js";
 export default function ProductList({ $target }) {
   const $page = document.createElement("div");
   $page.className = "ProductList";
