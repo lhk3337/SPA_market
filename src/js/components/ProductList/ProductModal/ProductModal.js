@@ -27,7 +27,7 @@ export default function ProductModal({ $target, productId, listRender }) {
     }
     console.log(this.state);
     const {
-      product: { thumbnailImg, pubDate, stockCount },
+      product: { thumbnailImg, pubDate, stockCount, detailInfoImage },
     } = this.state;
     $target.appendChild($modal);
     let getLiked = localStorage.getItem(productId);
@@ -49,6 +49,9 @@ export default function ProductModal({ $target, productId, listRender }) {
                 <td class="content">${stockCount}개</td>
               </tr>
             </table>
+          </div>
+          <div class="detail__page">
+            ${detailInfoImage.map((image) => `<img src="http://test.api.weniv.co.kr/${image}" />`).join("")}
           </div>
         </div>
     `;

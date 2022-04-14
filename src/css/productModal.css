@@ -278,3 +278,6 @@ input[type="number"] {
 .product__info table .content {
   width: 285px;
 }
+.detail__page img {
+  width: 100%;
+}
