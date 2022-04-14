@@ -46,7 +46,7 @@ export default function ProductModal({ $target, productId, listRender }) {
                 <td class="title">상품 번호</td>
                 <td class="content">${pubDate.replace(/\-/g, "")}</td>
                 <td class="title">재고 수량</td>
-                <td class="content">${stockCount}개</td>
+                <td class="content">${stockCount > 0 ? `${stockCount}개` : "-"}</td>
               </tr>
             </table>
           </div>
