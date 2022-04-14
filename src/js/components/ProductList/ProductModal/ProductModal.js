@@ -27,7 +27,7 @@ export default function ProductModal({ $target, productId, listRender }) {
     }
     console.log(this.state);
     const {
-      product: { thumbnailImg },
+      product: { thumbnailImg, pubDate, stockCount },
     } = this.state;
     $target.appendChild($modal);
     let getLiked = localStorage.getItem(productId);
@@ -41,6 +41,14 @@ export default function ProductModal({ $target, productId, listRender }) {
             </div>
           <div class="product__info">
             <h1 class="info__title">상품 정보</h1>
+            <table>
+              <tr>
+                <td class="title">상품 번호</td>
+                <td class="content">${pubDate.replace(/\-/g, "")}</td>
+                <td class="title">재고 수량</td>
+                <td class="content">${stockCount}개</td>
+              </tr>
+            </table>
           </div>
         </div>
     `;
