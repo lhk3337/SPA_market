@@ -58,6 +58,13 @@ export default function ProductModal({ $target, productId, listRender }) {
       $modal.remove();
       listRender();
     });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        $modal.remove();
+        listRender();
+      }
+    });
+
     new ModalOrder({
       $target: $modal.querySelector(".container"),
       getLiked: getLiked,
