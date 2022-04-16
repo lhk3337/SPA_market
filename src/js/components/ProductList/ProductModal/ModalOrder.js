@@ -10,20 +10,10 @@ export default function ModalOrder({ $target, getLiked, data }) {
 
   this.render = () => {
     const {
-      product: {
-        id,
-        productName,
-        price,
-        stockCount,
-        shippingFee,
-        discountPrice,
-        detailInfoImage,
-        discountRate,
-        viewCount,
-        thumbnailImg,
-      },
+      product: { id, productName, price, stockCount, shippingFee, discountPrice, discountRate, viewCount, option },
       count,
     } = this.state;
+    console.log(option);
     $component.innerHTML = `
     <h2>${productName}</h2>
     <div class="price">
@@ -44,7 +34,10 @@ export default function ModalOrder({ $target, getLiked, data }) {
     <div class="${stockCount > 0 ? `` : `not__count__info`}">
       <p class="shipFee">택배배송 / ${shippingFee === 0 ? "무료배송" : `${shippingFee.toLocaleString("ko-KR")}원`}</p>
       <div class="count__box">
-        <div class="count__countainer">
+      ${
+        Array.isArray(option) && option.length === 0
+          ? `
+        <div class="count__container">
           <button id="minus__btn">
             <img class="minus" src="/src/assets/icon-minus-line.svg" />
           </button>
@@ -53,6 +46,40 @@ export default function ModalOrder({ $target, getLiked, data }) {
             <img class="plus" src="/src/assets/icon-plus-line.svg" />
           </button>
         </div>
+        `
+          : `
+        <div class="option__container">
+          <div class="select-box">
+            <div class="options-container">
+              ${option
+                .map(
+                  (v) => `
+              <div class="option">
+                <input type="radio" class="radio" id="${v.id}" value="${v.additionalFee}" name="category" />
+                <label for="${v.id}">${v.optionName} ${v.additionalFee > 0 ? `(+${v.additionalFee}원)` : ""}</label>
+              </div>
+              `
+                )
+                .join("")}
+            </div>
+            <div class="selected">옵션을 선택하세요</div>
+          </div>
+          <div class="option__count">
+            <h3 class="option__title">13인치</h3>
+            <div class="count__container">
+              <button id="minus__btn">
+                <img class="minus" src="/src/assets/icon-minus-line.svg" />
+              </button>
+              <input type="number" class="input__count" min="1" max="${stockCount}" value="${count}" />
+              <button id="plus__btn">
+                <img class="plus" src="/src/assets/icon-plus-line.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+        `
+      }
+
       </div>
       <div class="total__price__container">
         <h3>총 상품 금액</h3>
@@ -75,13 +102,13 @@ export default function ModalOrder({ $target, getLiked, data }) {
       ${
         stockCount > 0
           ? `
-    <button class="buy__btn">바로 구매</button>
-    <div class="cart__detail__item"><img src="/src/assets/icon-shopping-cart.svg" /></div>
-  `
+            <button class="buy__btn">바로 구매</button>
+            <div class="cart__detail__item"><img src="/src/assets/icon-shopping-cart.svg" /></div>
+            `
           : `
-    <button class="buy__btn   cancel">품절된 상품입니다.</button>
-    <div class="cart__detail__item cancel"><img src="/src/assets/icon-shopping-cart-white.svg" /></div>
-  `
+            <button class="buy__btn   cancel">품절된 상품입니다.</button>
+            <div class="cart__detail__item cancel"><img src="/src/assets/icon-shopping-cart-white.svg" /></div>
+            `
       }
       <div class="like__detail__item">
         ${
@@ -96,6 +123,9 @@ export default function ModalOrder({ $target, getLiked, data }) {
     const count__input = document.querySelector(".input__count");
     const minus__btn = document.getElementById("minus__btn");
     const plus__btn = document.getElementById("plus__btn");
+    const $selected = document.querySelector(".selected");
+    const optionsList = document.querySelectorAll(".option");
+    const optionsContainer = document.querySelector(".options-container");
 
     count__input.addEventListener("change", (e) => {
       if (e.target.value <= 0) {
@@ -123,6 +153,19 @@ export default function ModalOrder({ $target, getLiked, data }) {
         this.setState({ ...this.state, count: parseInt(this.state.count) + 1 });
         count__input.value = this.state.count;
       }
+    });
+    Array.isArray(option) && option.length === 0
+      ? ""
+      : $selected.addEventListener("click", () => {
+          console.log("Aaa");
+          optionsContainer.classList.toggle("active");
+        });
+
+    optionsList.forEach((v) => {
+      v.addEventListener("click", (e) => {
+        $selected.innerHTML = v.querySelector("label").innerHTML;
+        optionsContainer.classList.remove("active");
+      });
     });
   };
   const discount = () => {

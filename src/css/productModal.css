@@ -39,7 +39,6 @@
 
 .container {
   width: 100%;
-  overflow: auto;
   display: flex;
 }
 
@@ -117,7 +116,7 @@
   margin-bottom: 16px;
 }
 
-.right__container .count__countainer {
+.right__container .count__container {
   border: 1px solid #bdbdbd;
   border-radius: 5px;
   width: 122px;
@@ -127,7 +126,7 @@
   /*   align-items:center; */
 }
 
-.count__countainer input {
+.count__container input {
   width: 100%;
   border: none;
   border-left: 1px solid #bdbdbd;
@@ -137,19 +136,31 @@
   line-height: 20px;
   font-weight: 400;
 }
-.count__countainer button {
+.count__container button {
   width: 100%;
   height: 40px;
   padding: 0;
   margin: 0;
+
   outline: none;
   border: none;
   cursor: pointer;
-  background-color: transparent;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.count__container #minus__btn {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.count__container #plus__btn {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -159,6 +170,101 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.right__container .option__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* select tag */
+.option__container .select-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.select-box .options-container {
+  background-color: #ffff;
+  border: 1px solid #c4c4c4;
+  color: #333333;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 50px;
+  transition: all 0.4s;
+  border-radius: 8px;
+  overflow: hidden;
+  order: 1;
+}
+
+.select-box .selected {
+  background-color: #ffff;
+  border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #828282;
+  padding: 11px 14px;
+  position: relative;
+  order: 0;
+}
+.select-box .selected::after {
+  content: "";
+  background: url("../assets/icon-Triangle-down.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 100%;
+  width: 12px;
+  right: 10px;
+  top: 14px;
+}
+
+.select-box .options-container.active {
+  max-height: 240px;
+  opacity: 1;
+}
+
+.select-box .options-container.active + .selected::after {
+  transform: rotateX(180deg);
+  top: -15px;
+}
+
+.select-box .options-container::-webkit-scrollbar {
+  display: none !important;
+}
+
+.select-box .option,
+.selected {
+  cursor: pointer;
+}
+.select-box .option {
+  margin: 9px 8px;
+  padding: 7px 10px;
+}
+.select-box .option:hover {
+  background-color: #f8f5ff;
+  border-radius: 5px;
+}
+
+.select-box label {
+  cursor: pointer;
+}
+.select-box .option .radio {
+  display: none;
+}
+
+/* 가격 카운트 모달창  */
+.option__container .option__count {
+  display: none;
+  margin-top: 16px;
+  background-color: #f3f0fb;
+  border-radius: 5px;
+  padding: 14px;
+}
+
+/* 가격 정보 */
 .right__container .total__price__container {
   display: flex;
   margin-bottom: 24px;
@@ -214,7 +320,7 @@ input[type="number"] {
   margin-top: 275px;
 }
 .btn__container .buy__btn {
-  width: 308px;
+  width: 295px;
   background-color: #6327fe;
   border-radius: 5px;
   outline: none;
