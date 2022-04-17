@@ -193,6 +193,7 @@ input[type="number"] {
   opacity: 0;
   position: absolute;
   top: 50px;
+  z-index: 5;
   transition: all 0.4s;
   border-radius: 8px;
   overflow: hidden;
@@ -224,6 +225,7 @@ input[type="number"] {
 .select-box .options-container.active {
   max-height: 240px;
   opacity: 1;
+  z-index: 5;
 }
 
 .select-box .options-container.active + .selected::after {
@@ -257,11 +259,46 @@ input[type="number"] {
 
 /* 가격 카운트 모달창  */
 .option__container .option__count {
-  display: none;
+  z-index: 0;
   margin-top: 16px;
+  position: relative;
   background-color: #f3f0fb;
   border-radius: 5px;
+  display: none;
   padding: 14px;
+}
+.option__count.display {
+  display: block;
+}
+.option__count.active {
+  display: none;
+}
+.option__count .close__option__Btn {
+  position: absolute;
+  right: 4px;
+  top: 8px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.option__count .option__title {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.option__count .option__price__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option__price__container .option__total__price {
+  font-size: 24px;
+  font-family: "SpoqaHanSansNeo-Medium";
+  font-weight: 700;
 }
 
 /* 가격 정보 */
@@ -298,7 +335,6 @@ input[type="number"] {
 
 .total__price .border {
   border: 1px solid #c4c4c4;
-
   padding: 10px 0px;
 }
 

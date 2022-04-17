@@ -65,16 +65,22 @@ export default function ModalOrder({ $target, getLiked, data }) {
             <div class="selected">옵션을 선택하세요</div>
           </div>
           <div class="option__count">
+            <button class="close__option__Btn"><img src="/src/assets/icon-delete.svg" /></button>
             <h3 class="option__title">13인치</h3>
-            <div class="count__container">
-              <button id="minus__btn">
-                <img class="minus" src="/src/assets/icon-minus-line.svg" />
-              </button>
-              <input type="number" class="input__count" min="1" max="${stockCount}" value="${count}" />
-              <button id="plus__btn">
-                <img class="plus" src="/src/assets/icon-plus-line.svg" />
-              </button>
-            </div>
+            <div class="option__price__container">
+              <div class="count__container">
+                <button id="minus__btn">
+                  <img class="minus" src="/src/assets/icon-minus-line.svg" />
+                </button>
+                <input type="number" class="input__count" min="1" max="${stockCount}" value="${count}" />
+                <button id="plus__btn">
+                  <img class="plus" src="/src/assets/icon-plus-line.svg" />
+                </button>
+              </div>
+              <div>
+                <span class="option__total__price">29,000원</span>
+              </div>
+              </div>
           </div>
         </div>
         `
@@ -124,8 +130,12 @@ export default function ModalOrder({ $target, getLiked, data }) {
     const minus__btn = document.getElementById("minus__btn");
     const plus__btn = document.getElementById("plus__btn");
     const $selected = document.querySelector(".selected");
+
+    // 옵션값이 있을경우
     const optionsList = document.querySelectorAll(".option");
     const optionsContainer = document.querySelector(".options-container");
+    const optionCount = document.querySelector(".option__count");
+    const optionCloseBtn = document.querySelector(".close__option__Btn");
 
     count__input.addEventListener("change", (e) => {
       if (e.target.value <= 0) {
@@ -154,19 +164,21 @@ export default function ModalOrder({ $target, getLiked, data }) {
         count__input.value = this.state.count;
       }
     });
-    Array.isArray(option) && option.length === 0
-      ? ""
-      : $selected.addEventListener("click", () => {
-          console.log("Aaa");
-          optionsContainer.classList.toggle("active");
+    if (Array.isArray(option) && option.length !== 0) {
+      $selected.addEventListener("click", () => {
+        optionsContainer.classList.toggle("active");
+        optionsList.forEach((v) => {
+          v.addEventListener("click", (e) => {
+            $selected.innerHTML = v.querySelector("label").innerHTML;
+            optionsContainer.classList.remove("active");
+            optionCount.classList.toggle("display");
+          });
         });
-
-    optionsList.forEach((v) => {
-      v.addEventListener("click", (e) => {
-        $selected.innerHTML = v.querySelector("label").innerHTML;
-        optionsContainer.classList.remove("active");
       });
-    });
+      optionCloseBtn.addEventListener("click", () => {
+        optionCount.classList.toggle("active");
+      });
+    }
   };
   const discount = () => {
     const { price, discountRate } = this.state.product;
