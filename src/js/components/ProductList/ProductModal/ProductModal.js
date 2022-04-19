@@ -25,7 +25,6 @@ export default function ProductModal({ $target, productId, listRender }) {
     if (this.state.product === null) {
       return;
     }
-    console.log(this.state);
     const {
       product: { thumbnailImg, pubDate, stockCount, detailInfoImage },
     } = this.state;
@@ -67,11 +66,15 @@ export default function ProductModal({ $target, productId, listRender }) {
         listRender();
       }
     });
-
+    console.log(this.state);
     new ModalOrder({
       $target: $modal.querySelector(".container"),
-      getLiked: getLiked,
-      data: this.state,
+      data: {
+        product: this.state.product,
+        count: this.state.count,
+        getLiked: getLiked,
+        selectedOptions: [],
+      },
     });
   };
 

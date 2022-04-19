@@ -264,7 +264,7 @@ input[type="number"] {
   position: relative;
   background-color: #f3f0fb;
   border-radius: 5px;
-  display: none;
+
   padding: 14px;
 }
 .option__count.display {
