@@ -12,6 +12,7 @@ export default function ModalOrder({ $target, getLiked, data }) {
     const {
       product: { id, productName, price, stockCount, shippingFee, discountPrice, discountRate, viewCount, option },
       count,
+      getLiked,
       selectedOptions,
     } = this.state;
 
@@ -75,11 +76,13 @@ export default function ModalOrder({ $target, getLiked, data }) {
             <h3 class="option__title">${selectedOption.optionName}</h3>
             <div class="option__price__container">
               <div class="count__container">
-                <button id="minus__btn">
+                <button id="option__minus__btn">
                   <img class="minus" src="/src/assets/icon-minus-line.svg" />
                 </button>
-                <input type="number" class="input__count" min="1" max="${stockCount}" value="${count}" />
-                <button id="plus__btn">
+                <input type="number" class="option__input__count" min="1" max="${stockCount}" value="${count}"  data-option-id="${
+                selectedOption.optionId
+              }"/>
+                <button id="option__plus__btn">
                   <img class="plus" src="/src/assets/icon-plus-line.svg" />
                 </button>
               </div>
@@ -184,7 +187,7 @@ export default function ModalOrder({ $target, getLiked, data }) {
         });
       });
       // 옵션 밑에 X 버튼 클릭시 삭제
-      optionCloseBtn.forEach((v, i) => {
+      optionCloseBtn.forEach((v) => {
         v.addEventListener("click", () => {
           const { optionId } = v.dataset;
           this.setState({

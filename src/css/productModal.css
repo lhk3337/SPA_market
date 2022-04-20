@@ -151,12 +151,14 @@
   justify-content: center;
 }
 
-.count__container #minus__btn {
+.count__container #minus__btn,
+.count__container #option__minus__btn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-.count__container #plus__btn {
+.count__container #plus__btn,
+.count__container #option__plus__btn {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
