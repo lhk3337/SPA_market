@@ -75,13 +75,13 @@ export default function ModalOrder({ $target, getLiked, data }) {
             }"><img src="/src/assets/icon-delete.svg" /></button>
             <h3 class="option__title">${selectedOption.optionName}</h3>
             <div class="option__price__container">
-              <div class="count__container">
+              <div class="option__count__container" data-count-id="${selectedOption.optionId}">
                 <button id="option__minus__btn">
                   <img class="minus" src="/src/assets/icon-minus-line.svg" />
                 </button>
-                <input type="number" class="option__input__count" min="1" max="${stockCount}" value="${count}"  data-option-id="${
-                selectedOption.optionId
-              }"/>
+                <input type="number" class="option__input__count" min="1" max="${stockCount}" value="${
+                selectedOption.qty
+              }"  data-option-inputid="${selectedOption.optionId}"/>
                 <button id="option__plus__btn">
                   <img class="plus" src="/src/assets/icon-plus-line.svg" />
                 </button>
@@ -89,8 +89,8 @@ export default function ModalOrder({ $target, getLiked, data }) {
               <div>
                 <span class="option__total__price">${
                   discountRate > 0
-                    ? (discountPrice + selectedOption.optionPrice * count).toLocaleString("ko-KR")
-                    : (count * price + selectedOption.optionPrice).toLocaleString("ko-KR")
+                    ? ((discountPrice + selectedOption.optionPrice) * selectedOption.qty).toLocaleString("ko-KR")
+                    : (selectedOption.qty * (price + selectedOption.optionPrice)).toLocaleString("ko-KR")
                 }</span>
               </div>
             </div>
@@ -107,12 +107,24 @@ export default function ModalOrder({ $target, getLiked, data }) {
         <h3>총 상품 금액</h3>
         <div class="total__price">
           <span class="price__text">
-            총 수량 <span class="count">${count}</span>개
+            총 수량 <span class="count">${
+              Array.isArray(option) && option.length === 0
+                ? `${count}`
+                : `${selectedOptions.reduce((a, b) => a + b.qty, 0)}`
+            }</span>개
           </span>
           <div class="border"></div>
           <h2 class="total__price__title">
           ${
-            discountRate > 0 ? (discountPrice * count).toLocaleString("ko-KR") : (count * price).toLocaleString("ko-KR")
+            Array.isArray(option) && option.length === 0
+              ? discountRate > 0
+                ? (discountPrice * count).toLocaleString("ko-KR")
+                : (count * price).toLocaleString("ko-KR")
+              : discountRate > 0
+              ? `${selectedOptions
+                  .reduce((a, b) => a + (discountPrice + b.optionPrice) * b.qty, 0)
+                  .toLocaleString("ko-KR")}`
+              : `${selectedOptions.reduce((a, b) => a + b.qty * (price + b.optionPrice), 0)}`
           }
             
             <span class="total__price__text">원</span>
@@ -154,6 +166,67 @@ export default function ModalOrder({ $target, getLiked, data }) {
     const radio = document.querySelectorAll(".radio");
     const optionCloseBtn = document.querySelectorAll(".close__option__Btn");
 
+    const optionCount = document.querySelectorAll(".option__count");
+
+    // 옵션 선택을 클릭하면 count 및 가격 정보 창에 대한 이벤트 설정
+    optionCount.forEach((v) => {
+      v.addEventListener("change", (e) => {
+        const { selectedOptions } = this.state;
+        if (e.target.tagName === "INPUT") {
+          const {
+            dataset: { optionInputid },
+          } = e.target;
+
+          selectedOptions.map((value) => {
+            if (value.optionId === parseInt(optionInputid)) {
+              if (e.target.value <= 0) {
+                value.qty = 1;
+                this.render();
+              } else if (e.target.value > stockCount) {
+                value.qty = stockCount;
+                this.render();
+              } else {
+                value.qty = parseInt(e.target.value);
+                this.render();
+              }
+            }
+          });
+        }
+      });
+      v.addEventListener("click", (e) => {
+        const id = v.querySelector(".option__count__container").dataset.countId;
+        const count__input = v.querySelector(".option__input__count");
+        if (e.target.className === "minus" || e.target.id === "option__minus__btn") {
+          selectedOptions.map((value) => {
+            if (value.optionId === parseInt(id)) {
+              if (parseInt(count__input.value) === 1) {
+                value.qty = parseInt(count__input.min);
+                this.render();
+              } else {
+                value.qty = parseInt(value.qty) - 1;
+                count__input.value = value.qty;
+                this.render();
+              }
+            }
+          });
+        } else if (e.target.className === "plus" || e.target.id === "option__plus__btn") {
+          selectedOptions.map((value) => {
+            if (value.optionId === parseInt(id)) {
+              if (parseInt(count__input.max) <= parseInt(count__input.value)) {
+                value.qty = parseInt(count__input.max);
+                this.render();
+              } else {
+                value.qty = parseInt(value.qty) + 1;
+                count__input.value = value.qty;
+                this.render();
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // 옵션 선택 시 이벤트 설정
     if (Array.isArray(option) && option.length !== 0) {
       // 옵션값이 있을경우 이벤트 실행
       $selected.addEventListener("click", () => {
@@ -176,7 +249,12 @@ export default function ModalOrder({ $target, getLiked, data }) {
             if (optionItem && !selectedOption) {
               const nextSelectedOptions = [
                 ...selectedOptions,
-                { optionId: optionItem.id, optionName: optionItem.optionName, optionPrice: optionItem.additionalFee },
+                {
+                  optionId: optionItem.id,
+                  optionName: optionItem.optionName,
+                  optionPrice: optionItem.additionalFee,
+                  qty: 1,
+                },
               ];
               this.setState({
                 ...this.state,
@@ -186,13 +264,14 @@ export default function ModalOrder({ $target, getLiked, data }) {
           }
         });
       });
-      // 옵션 밑에 X 버튼 클릭시 삭제
+      // 옵션 밑에 X 버튼 클릭시 삭제 이벤트
       optionCloseBtn.forEach((v) => {
         v.addEventListener("click", () => {
           const { optionId } = v.dataset;
+          const { selectedOptions } = this.state;
           this.setState({
             ...this.state,
-            selectedOptions: this.state.selectedOptions.filter((task) => task.optionId !== parseInt(optionId)),
+            selectedOptions: selectedOptions.filter((task) => task.optionId !== parseInt(optionId)),
           });
         });
       });
@@ -228,6 +307,7 @@ export default function ModalOrder({ $target, getLiked, data }) {
         }
       });
     }
+    console.log(this.state);
   };
 
   const discount = () => {

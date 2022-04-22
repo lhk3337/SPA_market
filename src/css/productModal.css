@@ -116,7 +116,8 @@
   margin-bottom: 16px;
 }
 
-.right__container .count__container {
+.right__container .count__container,
+.right__container .option__count__container {
   border: 1px solid #bdbdbd;
   border-radius: 5px;
   width: 122px;
@@ -126,7 +127,8 @@
   /*   align-items:center; */
 }
 
-.count__container input {
+.count__container input,
+.option__count__container input {
   width: 100%;
   border: none;
   border-left: 1px solid #bdbdbd;
@@ -136,7 +138,8 @@
   line-height: 20px;
   font-weight: 400;
 }
-.count__container button {
+.count__container button,
+.option__count__container button {
   width: 100%;
   height: 40px;
   padding: 0;
@@ -152,13 +155,13 @@
 }
 
 .count__container #minus__btn,
-.count__container #option__minus__btn {
+.option__count__container #option__minus__btn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
 .count__container #plus__btn,
-.count__container #option__plus__btn {
+.option__count__container #option__plus__btn {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
