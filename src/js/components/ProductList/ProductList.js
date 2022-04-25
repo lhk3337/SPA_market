@@ -1,6 +1,7 @@
 import { api } from "../../api.js";
 import { routeChange } from "../../router.js";
 import ProductModal from "./ProductModal/ProductModal.js";
+import { getItem, setItem, removeItem } from "../../storage.js";
 export default function ProductList({ $target }) {
   const $page = document.createElement("div");
   $page.className = "ProductList";
@@ -27,7 +28,7 @@ export default function ProductList({ $target }) {
     <ul>
       ${this.state // API 데이터(배열 객체 구조)[{},{}], 맵을 통해 요소를 html태그에 적용하고 있다.
         .map((product) => {
-          let liked = localStorage.getItem(product.id);
+          let liked = getItem(product.id, null);
           const discounted = Math.round(product.price * (product.discountRate / 100)); // 할인가 계산
           const discountValue = Math.floor((product.price - discounted).toPrecision(2)).toLocaleString("ko-KR"); // 현재가 - 할인가
           return `
@@ -94,10 +95,10 @@ export default function ProductList({ $target }) {
           }).render();
         }
       } else if (e.target.className === "like__on") {
-        localStorage.removeItem(productId, "true");
+        removeItem(productId);
         this.render();
       } else if (e.target.className === "like__off") {
-        localStorage.setItem(productId, "true");
+        setItem(productId, "true");
         this.render();
       }
     }

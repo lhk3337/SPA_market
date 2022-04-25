@@ -1,5 +1,6 @@
 import { api } from "../../../api.js";
 import ModalOrder from "./ModalOrder.js";
+import { getItem, removeItem, setItem } from "../../../storage.js";
 export default function ProductModal({ $target, productId, listRender }) {
   this.state = {
     product: null,
@@ -29,7 +30,7 @@ export default function ProductModal({ $target, productId, listRender }) {
       product: { thumbnailImg, pubDate, stockCount, detailInfoImage },
     } = this.state;
     $target.appendChild($modal);
-    let getLiked = localStorage.getItem(productId);
+    let getLiked = getItem(productId, null);
     $modal.innerHTML = `
         <div class="product__content">
           <button class="closeBtn"><img src="/src/assets/icon-delete.svg" /></button>
@@ -80,10 +81,10 @@ export default function ProductModal({ $target, productId, listRender }) {
 
   $modal.addEventListener("click", (e) => {
     if (e.target.className === "like__detail__on") {
-      localStorage.removeItem(productId, "true");
+      removeItem(productId, "true");
       this.render();
     } else if (e.target.className === "like__detail__off") {
-      localStorage.setItem(productId, "true");
+      setItem(productId, "true");
       this.render();
     }
   });
