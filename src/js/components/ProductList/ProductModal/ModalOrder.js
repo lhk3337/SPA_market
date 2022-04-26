@@ -1,3 +1,5 @@
+import { getItem, removeItem, setItem } from "../../../storage.js";
+import { routeChange } from "../../../router.js";
 export default function ModalOrder({ $target, getLiked, data }) {
   const $component = document.createElement("div");
   $component.className = "right__container";
@@ -137,7 +139,15 @@ export default function ModalOrder({ $target, getLiked, data }) {
         stockCount > 0
           ? `
             <button class="buy__btn">바로 구매</button>
-            <div class="cart__detail__item"><img src="/src/assets/icon-shopping-cart.svg" /></div>
+            <div class="cart__detail__item">
+              <img src="/src/assets/icon-shopping-cart.svg" />
+            </div>
+            <div class="add__cart__container">
+              <span class="triangle"></span>
+              <h1>장바구니에 추가되었습니다.</h1>
+                <button class="go__cart__btn">장바구니 가기</button>
+                <button class="continue__btn">계속 쇼핑 하기</button>
+            </div>
             `
           : `
             <button class="buy__btn   cancel">품절된 상품입니다.</button>
@@ -167,6 +177,11 @@ export default function ModalOrder({ $target, getLiked, data }) {
     const optionCloseBtn = document.querySelectorAll(".close__option__Btn");
 
     const optionCount = document.querySelectorAll(".option__count");
+    const $buyBtn = document.querySelector(".buy__btn");
+    const $cartBtn = document.querySelector(".cart__detail__item");
+    const $cartPopUp = document.querySelector(".add__cart__container");
+    const $goCartBtn = document.querySelector(".go__cart__btn");
+    const $continueCartBtn = document.querySelector(".continue__btn");
 
     // 옵션 선택을 클릭하면 count 및 가격 정보 창에 대한 이벤트 설정
     optionCount.forEach((v) => {
@@ -307,6 +322,69 @@ export default function ModalOrder({ $target, getLiked, data }) {
         }
       });
     }
+    $buyBtn.addEventListener("click", () => {
+      const { selectedOptions } = this.state;
+      const cartData = getItem("product_cart", []);
+      stockCount > 0
+        ? setItem(
+            "product_cart",
+            cartData.concat(
+              Array.isArray(option) && option.length === 0
+                ? {
+                    qty: count,
+                    optionPrice: null,
+                    optionId: null,
+                    price: price,
+                    productId: id,
+                  }
+                : selectedOptions.map((selectedOption) => ({
+                    qty: selectedOption.qty,
+                    optionPrice: selectedOption.optionPrice,
+                    optionId: selectedOption.optionId,
+                    price: price,
+                    productId: id,
+                  }))
+            )
+          )
+        : null;
+      ``;
+      routeChange("/cart");
+    });
+    $cartBtn.addEventListener("click", () => {
+      console.log("cart");
+      const { selectedOptions } = this.state;
+      const cartData = getItem("product_cart", []);
+      stockCount > 0
+        ? setItem(
+            "product_cart",
+            cartData.concat(
+              Array.isArray(option) && option.length === 0
+                ? {
+                    qty: count,
+                    optionPrice: null,
+                    optionId: null,
+                    price: price,
+                    productId: id,
+                  }
+                : selectedOptions.map((selectedOption) => ({
+                    qty: selectedOption.qty,
+                    optionPrice: selectedOption.optionPrice,
+                    optionId: selectedOption.optionId,
+                    price: price,
+                    productId: id,
+                  }))
+            )
+          )
+        : null;
+      ``;
+      $cartPopUp.style.display = "flex";
+    });
+    $goCartBtn.addEventListener("click", () => {
+      routeChange("/cart");
+    });
+    $continueCartBtn.addEventListener("click", () => {
+      $cartPopUp.style.display = "none";
+    });
     console.log(this.state);
   };
 
