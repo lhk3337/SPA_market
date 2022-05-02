@@ -240,9 +240,6 @@ export default function ModalOrder({ $target, getLiked, data }) {
 
     // 옵션 선택 시 이벤트 설정
     if (Array.isArray(option) && option.length !== 0) {
-      const $goCartBtn = document.querySelector(".go__cart__btn");
-      const $continueCartBtn = document.querySelector(".continue__btn");
-
       // 옵션값이 있을경우 이벤트 실행
       $selected.addEventListener("click", () => {
         optionsContainer.classList.toggle("active");
@@ -290,13 +287,6 @@ export default function ModalOrder({ $target, getLiked, data }) {
           });
         });
       });
-      $goCartBtn.addEventListener("click", () => {
-        routeChange("/cart");
-      });
-
-      $continueCartBtn.addEventListener("click", () => {
-        $cartPopUp.style.display = "none";
-      });
     } else {
       // 옵션값이 없을경우 이벤트 실행
       count__input.addEventListener("change", (e) => {
@@ -329,68 +319,76 @@ export default function ModalOrder({ $target, getLiked, data }) {
         }
       });
     }
+
     $buyBtn.addEventListener("click", () => {
       const { selectedOptions } = this.state;
       const cartData = getItem("product_cart", []);
 
-      if (Array.isArray(option) && option.length !== 0) {
-        stockCount > 0
-          ? setItem(
-              "product_cart",
-              cartData.concat(
-                Array.isArray(option) && option.length === 0
-                  ? {
-                      qty: count,
-                      optionPrice: null,
-                      optionId: null,
-                      price: price,
-                      productId: id,
-                    }
-                  : selectedOptions.map((selectedOption) => ({
-                      qty: selectedOption.qty,
-                      optionPrice: selectedOption.optionPrice,
-                      optionId: selectedOption.optionId,
-                      price: price,
-                      productId: id,
-                    }))
-              )
-            )
-          : null;
-        ``;
+      if (stockCount > 0) {
+        setItem(
+          "product_cart",
+          cartData.concat(
+            Array.isArray(option) && option.length === 0
+              ? {
+                  qty: count,
+                  optionPrice: null,
+                  optionId: null,
+                  price: price,
+                  productId: id,
+                }
+              : selectedOptions.map((selectedOption) => ({
+                  qty: selectedOption.qty,
+                  optionPrice: selectedOption.optionPrice,
+                  optionId: selectedOption.optionId,
+                  price: price,
+                  productId: id,
+                }))
+          )
+        );
         routeChange("/cart");
       }
     });
+
     $cartBtn.addEventListener("click", () => {
       const { selectedOptions } = this.state;
       const cartData = getItem("product_cart", []);
-      if (Array.isArray(option) && option.length !== 0) {
-        const $cartPopUp = document.querySelector(".add__cart__container");
-        stockCount > 0
-          ? setItem(
-              "product_cart",
-              cartData.concat(
-                Array.isArray(option) && option.length === 0
-                  ? {
-                      qty: count,
-                      optionPrice: null,
-                      optionId: null,
-                      price: price,
-                      productId: id,
-                    }
-                  : selectedOptions.map((selectedOption) => ({
-                      qty: selectedOption.qty,
-                      optionPrice: selectedOption.optionPrice,
-                      optionId: selectedOption.optionId,
-                      price: price,
-                      productId: id,
-                    }))
-              )
-            )
-          : null;
-        ``;
-        $cartPopUp.style.display = "flex";
+
+      if (stockCount > 0) {
+        setItem(
+          "product_cart",
+          cartData.concat(
+            Array.isArray(option) && option.length === 0
+              ? {
+                  qty: count,
+                  optionPrice: null,
+                  optionId: null,
+                  price: price,
+                  productId: id,
+                }
+              : selectedOptions.map((selectedOption) => ({
+                  qty: selectedOption.qty,
+                  optionPrice: selectedOption.optionPrice,
+                  optionId: selectedOption.optionId,
+                  price: price,
+                  productId: id,
+                }))
+          )
+        );
+        document.querySelector(".add__cart__container").style.display = "flex";
       }
     });
+
+    if (stockCount > 0) {
+      const $goCartBtn = document.querySelector(".go__cart__btn");
+      const $continueCartBtn = document.querySelector(".continue__btn");
+
+      $continueCartBtn.addEventListener("click", () => {
+        document.querySelector(".add__cart__container").style.display = "none";
+      });
+      $goCartBtn.addEventListener("click", () => {
+        routeChange("/cart");
+      });
+    }
 
     console.log(this.state);
   };
