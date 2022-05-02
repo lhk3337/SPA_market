@@ -36,6 +36,7 @@ export default function CartPage({ $target }) {
       <div class="select-box">
         <div class="options-container">
           ${couponOptions
+            .reverse()
             .map(
               (couponOption) => `
           <div class="option">
@@ -84,10 +85,5 @@ export default function CartPage({ $target }) {
   };
   document.querySelector(".home__btn").addEventListener("click", () => {
     routeChange("/");
-  });
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-      return;
-    }
   });
 }
