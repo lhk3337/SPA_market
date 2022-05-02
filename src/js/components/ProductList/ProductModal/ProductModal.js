@@ -64,7 +64,6 @@ export default function ProductModal({ $target, productId, listRender }) {
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") {
         $modal.remove();
-        listRender();
       }
     });
     console.log(this.state);
