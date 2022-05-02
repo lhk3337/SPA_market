@@ -27,6 +27,9 @@ export const api = {
   fetchProduct: async (Id) => {
     return await request(`${API_URL}/mall/${Id}`);
   },
+  fetchCoupon: async () => {
+    return await request(`${API_URL}/coupon`);
+  },
 };
 
 export default api;

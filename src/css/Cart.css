@@ -1,0 +1,50 @@
+.CartPage {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.CartPage h1,
+.CouponeContainer h2 {
+  font-family: SpoqaHanSansNeo-Medium;
+}
+.CartPage h1 {
+  font-size: 36px;
+}
+.CartPage .home__btn {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #6327fe;
+  padding: 0px;
+  right: -100px;
+  top: 0px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+.CartPage .CouponeContainer {
+  margin-top: 60px;
+  text-align: left;
+}
+.CouponeContainer h2 {
+  font-size: 24px;
+}
+.CouponeContainer hr {
+  background-color: #e0e0e0;
+  height: 2px;
+  margin-bottom: 16px;
+  border: none;
+  outline: none;
+}
+.CouponeContainer .coupon__option__container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.coupon__option__container .select-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
