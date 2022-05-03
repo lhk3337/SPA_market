@@ -1,5 +1,4 @@
 import { api } from "../api.js";
-import { routeChange } from "../router.js";
 
 export default function CartPage({ $target }) {
   // 타이틀
@@ -84,6 +83,6 @@ export default function CartPage({ $target }) {
     couponComponent(couponApi);
   };
   document.querySelector(".home__btn").addEventListener("click", () => {
-    routeChange("/");
+    window.location.href = "/";
   });
 }

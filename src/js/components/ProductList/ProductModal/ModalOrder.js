@@ -1,6 +1,6 @@
 import { getItem, removeItem, setItem } from "../../../storage.js";
 import { routeChange } from "../../../router.js";
-export default function ModalOrder({ $target, getLiked, data }) {
+export default function ModalOrder({ $target, data }) {
   const $component = document.createElement("div");
   $component.className = "right__container";
   $target.appendChild($component);
