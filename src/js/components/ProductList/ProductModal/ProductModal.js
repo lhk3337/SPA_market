@@ -30,7 +30,6 @@ export default function ProductModal({ $target, productId, listRender }) {
       product: { thumbnailImg, pubDate, stockCount, detailInfoImage },
     } = this.state;
     $target.appendChild($modal);
-    let getLiked = getItem(productId, null);
     $modal.innerHTML = `
         <div class="product__content">
           <button class="closeBtn"><img src="/src/assets/icon-delete.svg" /></button>
@@ -63,7 +62,11 @@ export default function ProductModal({ $target, productId, listRender }) {
     });
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") {
-        $modal.remove();
+        const { pathname } = location;
+        if (pathname == "/") {
+          $modal.remove();
+          listRender();
+        }
       }
     });
     console.log(this.state);
@@ -72,7 +75,6 @@ export default function ProductModal({ $target, productId, listRender }) {
       data: {
         product: this.state.product,
         count: this.state.count,
-        getLiked: getLiked,
         selectedOptions: [],
       },
     });

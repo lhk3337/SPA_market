@@ -14,10 +14,9 @@ export default function ModalOrder({ $target, getLiked, data }) {
     const {
       product: { id, productName, price, stockCount, shippingFee, discountPrice, discountRate, viewCount, option },
       count,
-      getLiked,
       selectedOptions,
     } = this.state;
-
+    let getLiked = getItem(id, null);
     $component.innerHTML = `
     <h2>${productName}</h2>
     <div class="price">
