@@ -16,15 +16,19 @@ export default function CartPage({ $target }) {
   $target.appendChild($page);
 
   // 홈 바로가기 버튼
-  const homeBtn = () => {
+  const HomeBtn = () => {
     const $homeBtn = document.createElement("button");
     $homeBtn.className = "home__btn";
     $homeBtn.innerHTML = `<img src="/src/assets/icon-home-white.svg">`;
     $page.appendChild($homeBtn);
+
+    document.querySelector(".home__btn").addEventListener("click", () => {
+      window.location.href = "/";
+    });
   };
 
   // 쿠폰 컴포넌트
-  const couponComponent = (couponOptions) => {
+  const CouponContainer = (couponOptions) => {
     const $coupon = document.createElement("div");
     $coupon.className = "CouponeContainer";
     $page.appendChild($coupon);
@@ -65,13 +69,27 @@ export default function CartPage({ $target }) {
     });
   };
 
+  const OrderProduct = () => {
+    const $product = document.createElement("div");
+    $product.className = "OrderProductContainer";
+    $page.appendChild($product);
+    $product.innerHTML = `<h2>주문 상품</h2>
+    <hr />
+    <button class="sel__cancel__btn">선택 삭제하기</button>
+    `;
+    const $selBtn = document.querySelector(".sel__cancel__btn");
+    $selBtn.addEventListener("click", () => {
+      console.log("hello world");
+    });
+  };
+  const totalPrice = () => {};
+  const orderBtn = () => {};
+
   // setState
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
   };
-
-  homeBtn();
 
   // render
   this.render = () => {
@@ -80,9 +98,10 @@ export default function CartPage({ $target }) {
     }
     const { couponApi } = this.state;
 
-    couponComponent(couponApi);
+    HomeBtn();
+    CouponContainer(couponApi);
+    OrderProduct();
+    totalPrice();
+    orderBtn();
   };
-  document.querySelector(".home__btn").addEventListener("click", () => {
-    window.location.href = "/";
-  });
 }

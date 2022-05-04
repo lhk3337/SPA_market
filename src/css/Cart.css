@@ -5,7 +5,8 @@
   position: relative;
 }
 .CartPage h1,
-.CouponeContainer h2 {
+.CouponeContainer h2,
+.OrderProductContainer h2 {
   font-family: SpoqaHanSansNeo-Medium;
 }
 .CartPage h1 {
@@ -24,14 +25,16 @@
   outline: none;
   border: none;
 }
-.CartPage .CouponeContainer {
+.CartPage .CouponeContainer,
+.CartPage .OrderProductContainer {
   margin-top: 60px;
   text-align: left;
 }
-.CouponeContainer h2 {
+.CouponeContainer h2,
+.OrderProductContainer h2 {
   font-size: 24px;
 }
-.CouponeContainer hr {
+.CouponeContainer hr .OrderProductContainer hr {
   background-color: #e0e0e0;
   height: 2px;
   margin-bottom: 16px;
@@ -47,4 +50,22 @@
   display: flex;
   flex-direction: column;
   position: relative;
+}
+.CartPage .OrderProductContainer {
+  margin-top: 40px;
+  position: relative;
+}
+.OrderProductContainer .sel__cancel__btn {
+  width: 130px;
+  height: 40px;
+  font-size: 16px;
+  margin-top: 8px;
+  font-family: SpoqaHanSansNeo-Medium;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  right: 0px;
+  position: absolute;
 }
