@@ -76,7 +76,18 @@ export default function CartPage({ $target }) {
     $page.appendChild($product);
     $product.innerHTML = `<h2>주문 상품</h2>
     <hr />
-    <button class="sel__cancel__btn">선택 삭제하기</button>
+  
+    <div class="btn__container">
+      <button class="sel__cancel__btn">선택 삭제하기</button>
+    </div>
+    <div class="title">
+      <input type="checkbox" name="checker" id="titleCheck">
+      <label for="titleCheck"></label>
+      <p>상품정보</p>
+      <p>쿠폰 할인</p>
+      <p>배송비</p>
+      <p>주문금액</p>
+    </div>
     `;
     const $selBtn = document.querySelector(".sel__cancel__btn");
     $selBtn.addEventListener("click", () => {
