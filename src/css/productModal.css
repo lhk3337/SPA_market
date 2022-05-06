@@ -15,7 +15,7 @@
 
 .product__content {
   width: 990px;
-  height: 80vh;
+  height: calc(100vh - 100px);
   position: relative;
   overflow: auto;
   padding: 60px 60px;
