@@ -60,15 +60,7 @@ export default function ProductModal({ $target, productId, listRender }) {
       $modal.remove();
       listRender();
     });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        const { pathname } = location;
-        if (pathname == "/") {
-          $modal.remove();
-          listRender();
-        }
-      }
-    });
+
     console.log(this.state);
     new ModalOrder({
       $target: $modal.querySelector(".container"),
