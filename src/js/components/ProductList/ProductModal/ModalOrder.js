@@ -319,62 +319,44 @@ export default function ModalOrder({ $target, data }) {
       });
     }
 
-    $buyBtn.addEventListener("click", () => {
+    const addsetItems = (className) => {
       const { selectedOptions } = this.state;
-      const cartData = getItem("product_cart", []);
-
+      const cartData = getItem("product_carts", []);
       if (stockCount > 0) {
         setItem(
-          "product_cart",
+          "product_carts",
           cartData.concat(
             Array.isArray(option) && option.length === 0
               ? {
                   qty: count,
                   optionPrice: null,
                   optionId: null,
-                  price: price,
+                  price: discountRate > 0 ? discountPrice : price,
                   productId: id,
                 }
               : selectedOptions.map((selectedOption) => ({
                   qty: selectedOption.qty,
                   optionPrice: selectedOption.optionPrice,
                   optionId: selectedOption.optionId,
-                  price: price,
+                  price: discountRate > 0 ? discountPrice : price,
                   productId: id,
                 }))
           )
         );
-        routeChange("/cart");
+        if (className === "buy__btn") {
+          routeChange("/cart");
+        } else {
+          document.querySelector(".add__cart__container").style.display = "flex";
+        }
       }
+    };
+
+    $buyBtn.addEventListener("click", (e) => {
+      addsetItems(e.target.className);
     });
 
-    $cartBtn.addEventListener("click", () => {
-      const { selectedOptions } = this.state;
-      const cartData = getItem("product_cart", []);
-
-      if (stockCount > 0) {
-        setItem(
-          "product_cart",
-          cartData.concat(
-            Array.isArray(option) && option.length === 0
-              ? {
-                  qty: count,
-                  optionPrice: null,
-                  optionId: null,
-                  price: price,
-                  productId: id,
-                }
-              : selectedOptions.map((selectedOption) => ({
-                  qty: selectedOption.qty,
-                  optionPrice: selectedOption.optionPrice,
-                  optionId: selectedOption.optionId,
-                  price: price,
-                  productId: id,
-                }))
-          )
-        );
-        document.querySelector(".add__cart__container").style.display = "flex";
-      }
+    $cartBtn.addEventListener("click", (e) => {
+      addsetItems(e.target.className);
     });
 
     if (stockCount > 0) {
