@@ -80,7 +80,6 @@
   background-color: #f2f2f2;
   border-radius: 10px;
   margin-top: 16px;
-  margin-bottom: 24px;
   padding-left: 24px;
 }
 .title p:last-child {
@@ -99,9 +98,50 @@ input[type="checkbox"] + label {
 input[type="checkbox"]:checked + label {
   background: url("../assets/icon-check-box-ON.svg") no-repeat 0 1px / contain;
 }
-li .cart__thumbnail {
+
+.check__cart {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  border-bottom: 1px solid #c4c4c4;
+  padding-top: 24px;
+  padding-bottom: 18px;
+}
+
+.check__cart .cart__thumbnail {
   width: 104px;
   height: 104px;
   border: 0.5px solid #bdbdbd;
   border-radius: 10px;
+  margin-left: 16px;
+  margin-right: 36px;
+}
+
+.check__cart .cart__product__info {
+  display: flex;
+  height: 65px;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-basis: 290px;
+  margin-right: 65px;
+}
+
+.check__cart .cart__right__container {
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.check__cart .coupon__discount {
+  height: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  font-size: 14px;
+}
+.cart__price {
+  flex-basis: 185px;
+  text-align: center;
 }

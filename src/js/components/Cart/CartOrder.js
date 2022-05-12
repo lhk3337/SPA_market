@@ -27,16 +27,25 @@ export default function OrderProduct({ products, $page, cartRender }) {
     ${products
       .map(
         (product) => `
-    <li  class="check__cart">
+    <li class="check__cart">
       <input type="checkbox" data-item-id=${product.productId} name="checker${product.productId}" id="listCheck${
           product.productId
         }">
       <label for="listCheck${product.productId}"></label>
       <img class="cart__thumbnail" src="http://test.api.weniv.co.kr/${product.image}" />
-      <h2>${product.productName}</h2>
-      <h2>${product.productPrice}</h2>
-      <p>${product.shippingFee}</p>
-      <p>${product.optionName === null ? `수량 ${product.qty}개` : `${product.optionName} ${product.qty}개`}  </p>
+      <div class="cart__product__info">
+        <p>${product.productName}</p>
+        <h3>${product.productPrice}</h3>
+        <p>${product.optionName === null ? `수량 ${product.qty}개` : `${product.optionName} ${product.qty}개`}  </p>
+      </div>
+      <div class="cart__right__container">
+        <div class="coupon__discount">
+          <p>Hack Your Life 개발자 노트북...</p>
+          <h3>-2000원</h3>
+        </div>
+        <p>${product.shippingFee}</p>
+        <h3 class="cart__price">${product.productPrice + product.shippingFee}</h3>
+      </div>
     </li>
     `
       )
