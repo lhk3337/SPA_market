@@ -1,4 +1,4 @@
-import CartPage from "./components/CartPage.js";
+import CartPage from "./components/Cart/CartPage.js";
 import ProductList from "./components/ProductList/ProductList.js";
 import { init } from "./router.js";
 function App({ $target }) {

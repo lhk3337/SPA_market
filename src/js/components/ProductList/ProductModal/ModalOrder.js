@@ -329,14 +329,12 @@ export default function ModalOrder({ $target, data }) {
             Array.isArray(option) && option.length === 0
               ? {
                   qty: count,
-                  optionPrice: null,
                   optionId: null,
                   price: discountRate > 0 ? discountPrice : price,
                   productId: id,
                 }
               : selectedOptions.map((selectedOption) => ({
                   qty: selectedOption.qty,
-                  optionPrice: selectedOption.optionPrice,
                   optionId: selectedOption.optionId,
                   price: discountRate > 0 ? discountPrice : price,
                   productId: id,
@@ -370,8 +368,6 @@ export default function ModalOrder({ $target, data }) {
         routeChange("/cart");
       });
     }
-
-    console.log(this.state);
   };
 
   const discount = () => {

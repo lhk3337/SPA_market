@@ -63,7 +63,6 @@ export default function ProductModal({ $target, productId, listRender }) {
       listRender();
     });
 
-    console.log(this.state);
     new ModalOrder({
       $target: $modal.querySelector(".info__container"),
       data: {
