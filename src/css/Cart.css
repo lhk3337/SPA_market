@@ -6,7 +6,8 @@
 }
 .CartPage h1,
 .CouponeContainer h2,
-.OrderProductContainer h2 {
+.OrderProductContainer h2,
+.cart__product__info h3 {
   font-family: SpoqaHanSansNeo-Medium;
 }
 .CartPage h1 {
@@ -126,6 +127,11 @@ input[type="checkbox"]:checked + label {
   margin-right: 65px;
 }
 
+.cart__product__info .count {
+  font-size: 12px;
+  color: #828282;
+}
+
 .check__cart .cart__right__container {
   width: 800px;
   display: flex;
@@ -134,14 +140,31 @@ input[type="checkbox"]:checked + label {
 
 .check__cart .coupon__discount {
   height: 40px;
-
+  width: 186px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
   font-size: 14px;
 }
+
+.coupon__discount p {
+  color: #828282;
+  font-size: 14px;
+}
+
+.coupon__discount h3 {
+  color: #eb5757;
+  font-family: SpoqaHanSansNeo-Medium;
+  font-size: 18px;
+}
+
+.cart__right__container .cart__shipFee {
+  color: #828282;
+  font-size: 14px;
+}
 .cart__price {
   flex-basis: 185px;
   text-align: center;
+  font-family: SpoqaHanSansNeo-Medium;
 }
