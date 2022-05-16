@@ -19,6 +19,7 @@ export default function CartPage({ $target }) {
       cartData.map(async (cartItem) => {
         const product = await api.fetchProduct(cartItem.productId);
         const selectedOption = product.option.find((option) => option.id === cartItem.optionId);
+
         return {
           productId: product.id,
           image: product.thumbnailImg,
@@ -26,6 +27,7 @@ export default function CartPage({ $target }) {
           productPrice: cartItem.price,
           discountRate: product.discountRate,
           shippingFee: product.shippingFee,
+          optionId: selectedOption?.id !== undefined ? selectedOption?.id : null,
           optionName: selectedOption?.optionName !== undefined ? selectedOption?.optionName : null,
           optionPrice: selectedOption?.additionalFee !== undefined ? selectedOption?.additionalFee : null,
           qty: cartItem.qty,
@@ -41,6 +43,39 @@ export default function CartPage({ $target }) {
   };
 
   fetchData();
+
+  const orderData = (products) => {
+    return Object.values(
+      products.reduce((prev, curr) => {
+        if (prev[curr.productId]) {
+          const data = prev[curr.productId];
+          if (!data.option) {
+            data.option = [];
+            data.option.push({
+              optionName: data.optionName,
+              optionPrice: data.optionPrice,
+              qty: data.qty,
+              optionId: data.optionId,
+            });
+            delete data.optionName;
+            delete data.optionPrice;
+            delete data.qty;
+            delete data.optionId;
+          }
+
+          prev[curr.productId].option.push({
+            optionName: curr.optionName,
+            optionPrice: curr.optionPrice,
+            qty: curr.qty,
+            optionId: curr.optionId,
+          });
+        } else {
+          prev[curr.productId] = curr;
+        }
+        return prev;
+      }, {})
+    );
+  };
 
   const $page = document.createElement("div");
   $page.className = "CartPage";
@@ -65,7 +100,7 @@ export default function CartPage({ $target }) {
     new CouponContainer({ couponOptions: couponApi, $page });
 
     // 구매 물품 리스트 컴포넌트
-    new OrderProduct({ products, $page, cartRender: () => this.render() });
+    new OrderProduct({ products: orderData(products), $page, cartRender: () => this.render() });
     totalPrice();
     orderBtn();
     console.log(this.state);

@@ -1,12 +1,6 @@
 import { getItem, removeItem } from "../../storage.js";
 import { routeChange } from "../../router.js";
 export default function OrderProduct({ products, $page, cartRender }) {
-  const cartData = getItem("product_carts", []);
-
-  const aaa = cartData.map((cartItem) => {
-    return products.filter((value) => value.productId === cartItem.productId);
-  });
-
   const $product = document.createElement("div");
   $product.className = "OrderProductContainer";
   $page.appendChild($product);
@@ -37,7 +31,13 @@ export default function OrderProduct({ products, $page, cartRender }) {
         <p>${product.productName.length < 25 ? product.productName : product.productName.substring(0, 20) + "..."}</p>
         <h3>${product.productPrice}원</h3>
         <p class="count">${
-          product.optionName === null ? `수량 ${product.qty}개` : `${product.optionName} ${product.qty}개`
+          product.option === undefined
+            ? product.optionName === null
+              ? `수량 ${product.qty}개`
+              : `옵션 : ${product.optionName}(수량: ${product.qty}개)`
+            : `${product.option
+                .map((item) => `<span>옵션 : ${item.optionName}(수량: ${item.qty}개)</span>`)
+                .join(" / ")}`
         }  </p>
       </div>
       <div class="cart__right__container">
