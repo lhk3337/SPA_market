@@ -103,6 +103,5 @@ export default function CartPage({ $target }) {
     new OrderProduct({ products: orderData(products), $page, cartRender: () => this.render() });
     totalPrice();
     orderBtn();
-    console.log(this.state);
   };
 }

@@ -54,6 +54,14 @@ export default function OrderProduct({ products, $page, cartRender }) {
       .join("")}
     </ul>
     `;
+  const allCheck = document.getElementById("titleCheck");
+  allCheck.addEventListener("click", () => {
+    const checkboxs = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxs.length; i++) {
+      if (checkboxs[i] != allCheck) checkboxs[i].checked = allCheck.checked;
+    }
+  });
+
   const btn = document.querySelector(".sel__cancel__btn");
 
   btn.addEventListener("click", () => {
